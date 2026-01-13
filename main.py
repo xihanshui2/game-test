@@ -19,11 +19,13 @@ def cleanup_temp_files() -> None:
     """删除测试过程中产生的临时文件和目录"""
     base_dir = Path.cwd()
 
-    # 删除 tmpclaude-* 目录
-    for tmp_dir in base_dir.glob("tmpclaude-*"):
+    # 删除所有 tmpclaude-* 文件和目录
+    for tmp_item in base_dir.glob("tmpclaude-*"):
         try:
-            if tmp_dir.is_dir():
-                shutil.rmtree(tmp_dir)
+            if tmp_item.is_dir():
+                shutil.rmtree(tmp_item)
+            elif tmp_item.is_file():
+                tmp_item.unlink()
         except Exception:
             pass
 
@@ -83,6 +85,9 @@ def main() -> None:
     """
     游戏主函数
     """
+    # 启动时清理之前的临时文件
+    cleanup_temp_files()
+
     # 注册退出时清理临时文件（备用）
     atexit.register(cleanup_temp_files)
 
