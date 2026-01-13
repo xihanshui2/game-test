@@ -41,6 +41,7 @@ ENEMY_SPAWN_RATE: int = 60  # 帧数间隔
 BULLET_SPEED: int = 10
 BULLET_COOLDOWN: int = 15  # 帧数间隔
 BULLET_DAMAGE: int = 10
+CONTINUOUS_SHOOTING: bool = True  # 是否启用连续射击
 
 # 音频设置 (预初始化)
 MIXER_FREQUENCY: int = 44100

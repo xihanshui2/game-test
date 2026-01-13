@@ -61,7 +61,7 @@ class MenuState(GameState):
         # 绘制菜单标题
         self.hud.draw_text_centered("飞机大战", -50, config.GREEN, 48)
         self.hud.draw_text_centered("按 ENTER 开始游戏", 50, config.WHITE, 24)
-        self.hud.draw_text_centered("方向键/WASD 移动，空格键射击", 100, config.GRAY, 18)
+        self.hud.draw_text_centered("方向键/WASD 移动，按住空格键连续射击", 100, config.GRAY, 18)
 
 
 class RunningState(GameState):
@@ -94,16 +94,19 @@ class RunningState(GameState):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 self.next_state = config.STATE_PAUSED
-            elif event.key == pygame.K_SPACE:
-                # 发射子弹
-                pos = self.player.get_position()
-                self.bullet_manager.shoot(pos[0], pos[1], self.bullets)
 
     def update(self) -> None:
         # 检查玩家是否存活
         if not self.player.is_alive():
             self.next_state = config.STATE_GAME_OVER
             return
+
+        # 处理连续射击
+        if config.CONTINUOUS_SHOOTING:
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_SPACE]:
+                pos = self.player.get_position()
+                self.bullet_manager.shoot(pos[0], pos[1], self.bullets)
 
         # 更新所有精灵
         self.all_sprites.update()
