@@ -3,12 +3,37 @@
 游戏的启动点，包含主循环和初始化逻辑
 """
 
+import atexit
+import os
+import shutil
 import pygame
 import sys
+from pathlib import Path
 from typing import Optional
 
 import config
 from src.systems.state_machine import GameStateMachine
+
+
+def cleanup_temp_files() -> None:
+    """删除测试过程中产生的临时文件和目录"""
+    base_dir = Path.cwd()
+
+    # 删除 tmpclaude-* 目录
+    for tmp_dir in base_dir.glob("tmpclaude-*"):
+        try:
+            if tmp_dir.is_dir():
+                shutil.rmtree(tmp_dir)
+        except Exception:
+            pass
+
+    # 删除 nul 文件（如果存在）
+    nul_file = base_dir / "nul"
+    if nul_file.exists():
+        try:
+            nul_file.unlink()
+        except Exception:
+            pass
 
 
 def init_pygame() -> pygame.Surface:
@@ -58,6 +83,9 @@ def main() -> None:
     """
     游戏主函数
     """
+    # 注册退出时清理临时文件
+    atexit.register(cleanup_temp_files)
+
     # 解析命令行参数
     debug_mode = parse_arguments()
     config.DEBUG_MODE = debug_mode

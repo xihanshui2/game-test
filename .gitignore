@@ -54,3 +54,4 @@ assets/temp/
 *.tmp
 nul
 tmpclaude-156e-cwd tmpclaude-4baa-cwd tmpclaude-4f2b-cwd tmpclaude-53d2-cwd tmpclaude-6ed1-cwd tmpclaude-8186-cwd tmpclaude-9555-cwd tmpclaude-a81d-cwd tmpclaude-b98e-cwd tmpclaude-d6cb-cwd
+cleanup.py
