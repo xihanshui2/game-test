@@ -83,51 +83,58 @@ def main() -> None:
     """
     游戏主函数
     """
-    # 注册退出时清理临时文件
+    # 注册退出时清理临时文件（备用）
     atexit.register(cleanup_temp_files)
 
-    # 解析命令行参数
-    debug_mode = parse_arguments()
-    config.DEBUG_MODE = debug_mode
+    try:
+        # 解析命令行参数
+        debug_mode = parse_arguments()
+        config.DEBUG_MODE = debug_mode
 
-    # 初始化 Pygame
-    screen = init_pygame()
-    clock = pygame.time.Clock()
+        # 初始化 Pygame
+        screen = init_pygame()
+        clock = pygame.time.Clock()
 
-    # 初始化状态机
-    state_machine = GameStateMachine(screen)
+        # 初始化状态机
+        state_machine = GameStateMachine(screen)
 
-    # 主游戏循环
-    running = True
-    while running:
-        # 1. 事件处理
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            else:
-                state_machine.handle_event(event)
+        # 主游戏循环
+        running = True
+        while running:
+            # 1. 事件处理
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                else:
+                    state_machine.handle_event(event)
 
-        # 2. 逻辑更新
-        state_machine.update()
+            # 2. 逻辑更新
+            state_machine.update()
 
-        # 3. 画面渲染
-        state_machine.draw(screen)
+            # 3. 画面渲染
+            state_machine.draw(screen)
 
-        # 更新屏幕
-        pygame.display.flip()
+            # 更新屏幕
+            pygame.display.flip()
 
-        # 控制帧率
-        clock.tick(config.FPS)
+            # 控制帧率
+            clock.tick(config.FPS)
 
-        # 显示 FPS (如果启用)
-        if config.SHOW_FPS and config.DEBUG_MODE:
-            fps = clock.get_fps()
-            pygame.display.set_caption(f"{config.CAPTION} - FPS: {fps:.2f}")
+            # 显示 FPS (如果启用)
+            if config.SHOW_FPS and config.DEBUG_MODE:
+                fps = clock.get_fps()
+                pygame.display.set_caption(f"{config.CAPTION} - FPS: {fps:.2f}")
 
-    # 退出游戏
-    pygame.quit()
-    sys.exit()
+    finally:
+        # 确保无论如何都清理临时文件
+        pygame.quit()
+        cleanup_temp_files()
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        # Ctrl+C 退出时也要清理
+        cleanup_temp_files()
+        sys.exit(0)
