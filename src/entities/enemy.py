@@ -29,10 +29,7 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.centerx = x
         self.rect.centery = y
 
-        self.speed: int = random.randint(
-            config.ENEMY_SPEED_MIN,
-            config.ENEMY_SPEED_MAX
-        )
+        self.speed: int = random.randint(config.ENEMY_SPEED_MIN, config.ENEMY_SPEED_MAX)
         self.health: int = 20
         self.damage: int = 10
 

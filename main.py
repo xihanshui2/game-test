@@ -23,7 +23,7 @@ def init_pygame() -> pygame.Surface:
         config.MIXER_FREQUENCY,
         config.MIXER_SIZE,
         config.MIXER_CHANNELS,
-        config.MIXER_BUFFER
+        config.MIXER_BUFFER,
     )
 
     # 初始化所有 Pygame 模块

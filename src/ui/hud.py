@@ -38,26 +38,17 @@ class HUD:
         health_percent = health / max_health
 
         # 绘制背景
-        pygame.draw.rect(
-            self.screen,
-            config.GRAY,
-            (x, y, bar_width, bar_height)
-        )
+        pygame.draw.rect(self.screen, config.GRAY, (x, y, bar_width, bar_height))
 
         # 绘制当前生命值
         pygame.draw.rect(
             self.screen,
             config.GREEN,
-            (x, y, int(bar_width * health_percent), bar_height)
+            (x, y, int(bar_width * health_percent), bar_height),
         )
 
         # 绘制边框
-        pygame.draw.rect(
-            self.screen,
-            config.WHITE,
-            (x, y, bar_width, bar_height),
-            2
-        )
+        pygame.draw.rect(self.screen, config.WHITE, (x, y, bar_width, bar_height), 2)
 
         # 绘制文字
         text = self.font_small.render(f"HP: {health}/{max_health}", True, config.WHITE)
@@ -93,7 +84,7 @@ class HUD:
         text: str,
         y_offset: int = 0,
         color: Tuple[int, int, int] = config.WHITE,
-        font_size: int = None
+        font_size: int = None,
     ) -> None:
         """
         在屏幕中央绘制文字
@@ -104,7 +95,9 @@ class HUD:
             color: 文字颜色
             font_size: 字体大小
         """
-        font = self.font_large if font_size is None else pygame.font.Font(None, font_size)
+        font = (
+            self.font_large if font_size is None else pygame.font.Font(None, font_size)
+        )
         surface = font.render(text, True, color)
         rect = surface.get_rect()
         rect.center = (config.SCREEN_WIDTH // 2, config.SCREEN_HEIGHT // 2 + y_offset)

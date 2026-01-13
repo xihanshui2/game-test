@@ -15,9 +15,7 @@ class CollisionSystem:
         pass
 
     def check_bullet_enemy_collision(
-        self,
-        bullets: pygame.sprite.Group,
-        enemies: pygame.sprite.Group
+        self, bullets: pygame.sprite.Group, enemies: pygame.sprite.Group
     ) -> List[pygame.sprite.Sprite]:
         """
         检测子弹与敌人的碰撞
@@ -40,9 +38,7 @@ class CollisionSystem:
         return hit_enemies
 
     def check_player_enemy_collision(
-        self,
-        player: pygame.sprite.Sprite,
-        enemies: pygame.sprite.Group
+        self, player: pygame.sprite.Sprite, enemies: pygame.sprite.Group
     ) -> bool:
         """
         检测玩家与敌人的碰撞
@@ -61,7 +57,7 @@ class CollisionSystem:
         self,
         player: pygame.sprite.Sprite,
         bullets: pygame.sprite.Group,
-        enemies: pygame.sprite.Group
+        enemies: pygame.sprite.Group,
     ) -> Tuple[List[pygame.sprite.Sprite], bool]:
         """
         检测所有碰撞
