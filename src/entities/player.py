@@ -20,9 +20,9 @@ class Player(pygame.sprite.Sprite):
         """
         super().__init__()
 
-        # TODO: 加载玩家图片资源
-        self.image = pygame.Surface((50, 50))
-        self.image.fill(config.GREEN)
+        # 创建玩家飞机图像
+        self.image = pygame.Surface((50, 50), pygame.SRCALPHA)
+        self._draw_plane()
 
         self.rect = self.image.get_rect()
         self.rect.centerx = x
@@ -31,6 +31,30 @@ class Player(pygame.sprite.Sprite):
         self.speed: int = config.PLAYER_SPEED
         self.health: int = config.PLAYER_MAX_HEALTH
         self.score: int = 0
+
+    def _draw_plane(self) -> None:
+        """绘制玩家飞机形状"""
+        # 机身
+        pygame.draw.polygon(self.image, config.GREEN, [
+            (25, 5),   # 机头
+            (20, 30),  # 机身左侧
+            (25, 45),  # 机尾
+            (30, 30),  # 机身右侧
+        ])
+        # 主翼
+        pygame.draw.polygon(self.image, config.GREEN, [
+            (10, 25),  # 左翼尖
+            (25, 20),  # 中心前
+            (25, 35),  # 中心后
+            (40, 25),  # 右翼尖
+        ])
+        # 尾翼
+        pygame.draw.polygon(self.image, config.GREEN, [
+            (15, 40),  # 左尾尖
+            (25, 40),  # 中心
+            (25, 48),  # 尾后
+            (30, 40),  # 右尾尖
+        ])
 
     def update(self) -> None:
         """更新玩家状态"""

@@ -18,9 +18,26 @@ class HUD:
             screen: 游戏屏幕对象
         """
         self.screen = screen
-        self.font_small = pygame.font.Font(None, config.FONT_SIZE_SMALL)
-        self.font_medium = pygame.font.Font(None, config.FONT_SIZE_MEDIUM)
-        self.font_large = pygame.font.Font(None, config.FONT_SIZE_LARGE)
+        # 尝试加载支持中文的字体，如果失败则使用默认字体
+        self.font_small = self._load_chinese_font(config.FONT_SIZE_SMALL)
+        self.font_medium = self._load_chinese_font(config.FONT_SIZE_MEDIUM)
+        self.font_large = self._load_chinese_font(config.FONT_SIZE_LARGE)
+
+    def _load_chinese_font(self, size: int) -> pygame.font.Font:
+        """
+        加载支持中文的字体
+
+        Args:
+            size: 字体大小
+
+        Returns:
+            pygame.font.Font: 字体对象
+        """
+        # Windows 中文字体列表 - 按优先级排序
+        font_names = "microsoftyahei,simhei,simsun,arialuni"
+
+        # 直接使用 SysFont，它会自动选择第一个可用的中文字体
+        return pygame.font.SysFont(font_names, size)
 
     def draw_health(self, health: int, max_health: int) -> None:
         """
@@ -96,9 +113,10 @@ class HUD:
             color: 文字颜色
             font_size: 字体大小
         """
-        font = (
-            self.font_large if font_size is None else pygame.font.Font(None, font_size)
-        )
+        if font_size is None:
+            font = self.font_large
+        else:
+            font = self._load_chinese_font(font_size)
         surface = font.render(text, True, color)
         rect = surface.get_rect()
         rect.center = (config.SCREEN_WIDTH // 2, config.SCREEN_HEIGHT // 2 + y_offset)

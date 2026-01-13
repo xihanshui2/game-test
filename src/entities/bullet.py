@@ -19,9 +19,11 @@ class Bullet(pygame.sprite.Sprite):
         """
         super().__init__()
 
-        # TODO: 加载子弹图片资源
-        self.image = pygame.Surface((10, 20))
-        self.image.fill(config.YELLOW)
+        # 创建子弹图像
+        self.image = pygame.Surface((6, 16), pygame.SRCALPHA)
+        # 绘制子弹形状
+        pygame.draw.ellipse(self.image, config.YELLOW, (0, 0, 6, 16))
+        pygame.draw.ellipse(self.image, (255, 255, 200), (1, 2, 4, 8))  # 高光
 
         self.rect = self.image.get_rect()
         self.rect.centerx = x

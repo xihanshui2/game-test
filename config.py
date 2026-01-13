@@ -60,9 +60,9 @@ SHOW_FPS: bool = True
 VOLUME: float = 0.7  # 0.0 到 1.0
 
 # 字体设置
-FONT_SIZE_SMALL: int = 18
-FONT_SIZE_MEDIUM: int = 24
-FONT_SIZE_LARGE: int = 36
+FONT_SIZE_SMALL: int = 20
+FONT_SIZE_MEDIUM: int = 28
+FONT_SIZE_LARGE: int = 48
 
 # 分数设置
 SCORE_ENEMY_KILL: int = 100

@@ -21,9 +21,9 @@ class Enemy(pygame.sprite.Sprite):
         """
         super().__init__()
 
-        # TODO: 加载敌人图片资源
-        self.image = pygame.Surface((40, 40))
-        self.image.fill(config.RED)
+        # 创建敌机图像
+        self.image = pygame.Surface((40, 40), pygame.SRCALPHA)
+        self._draw_plane()
 
         self.rect = self.image.get_rect()
         self.rect.centerx = x
@@ -32,6 +32,23 @@ class Enemy(pygame.sprite.Sprite):
         self.speed: int = random.randint(config.ENEMY_SPEED_MIN, config.ENEMY_SPEED_MAX)
         self.health: int = 20
         self.damage: int = 10
+
+    def _draw_plane(self) -> None:
+        """绘制敌机形状（倒置的飞机）"""
+        # 机身（倒置）
+        pygame.draw.polygon(self.image, config.RED, [
+            (20, 5),   # 机尾
+            (15, 30),  # 机身右侧
+            (20, 35),  # 机头
+            (25, 30),  # 机身左侧
+        ])
+        # 主翼
+        pygame.draw.polygon(self.image, config.RED, [
+            (5, 15),   # 左翼尖
+            (20, 10),  # 中心前
+            (20, 25),  # 中心后
+            (35, 15),  # 右翼尖
+        ])
 
     def update(self) -> None:
         """更新敌人状态"""

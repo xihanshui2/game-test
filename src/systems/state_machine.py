@@ -261,6 +261,10 @@ class GameStateMachine:
             score: 可选的分数参数
         """
         if state_name in self.states:
+            # 如果切换到游戏运行状态，重新初始化以确保状态重置
+            if state_name == config.STATE_RUNNING:
+                self.states[state_name] = RunningState(self.screen)
+
             # 如果切换到游戏结束状态，传递分数
             if state_name == config.STATE_GAME_OVER and score is not None:
                 if isinstance(self.current_state, RunningState):
