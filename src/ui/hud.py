@@ -3,6 +3,7 @@ HUD 系统 - 显示游戏信息
 """
 
 import pygame
+from typing import Tuple
 import config
 
 
